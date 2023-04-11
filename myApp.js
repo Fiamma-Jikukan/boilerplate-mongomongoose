@@ -12,11 +12,31 @@ const personSchema = new mongoose.Schema({
 let Person = mongoose.model("Person", personSchema);
 
 const createAndSavePerson = (done) => {
-  done(null , "data");
+  let fiamma = new Person({ name: "Fiamma", age: 21, favoriteFoods: ["winning", "angels"] });
+  fiamma.save((err, data) => {
+    if (err) {
+      return console.error(err)
+    } else {
+      done(null, data);
+    };
+  });
+
 };
 
+let arrayOfPeople = [
+  { name: "One", age: 21, favoriteFoods: ["Avatars", "Fire"] },
+  { name: "Two", age: 22, favoriteFoods: ["Air", "angels"] },
+  { name: "Three", age: 23, favoriteFoods: ["Water", "angels"] }
+]
+
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  Person.create(arrayOfPeople, (err, people) => {
+    if (err) {
+      return console.error(err)
+    } else {
+      done(null, people);
+    };
+  });
 };
 
 const findPeopleByName = (personName, done) => {
